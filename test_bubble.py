@@ -9,7 +9,7 @@
 from unittest import result
 import pytest
 
-from Bubble_sort.bubble import bubble_sort
+from Bubble_sort.bubble import bubble_sort, swap_data
 
 class TestBubbleSort():
 
@@ -47,4 +47,30 @@ class TestBubbleSort():
         data = ['a']
         result = bubble_sort(data)
         assert result == ['a']
-    
+
+# 1. Data and positive indexces
+# 2. Data and negitaive indexces
+# 3. Empty data and indexces - Raises IndexError
+# 4. Data and empty indexces - Raises TypeError
+
+class TestSwapData():
+
+    def test_data_and_positive_idx(self):
+        data = [22,-78,56.1]
+        result = swap_data(data, 1, 2)
+        assert [22, 56.1, -78], result
+
+    def test_data_adn_negative_idx(self):
+        data = [22,-78,56.1]
+        result = swap_data(data, -1, -2)
+        assert [-78, 22, 56.1, ], result
+
+    def test_empty_data_and_idx(self):
+        with pytest.raises(IndexError):
+            data = []
+            result = swap_data(data, 1, 2)
+
+    def test_data_and_empty_idx(self):
+        with pytest.raises(TypeError):
+            data = [22,-78,56.1]
+            swap_data(data)
