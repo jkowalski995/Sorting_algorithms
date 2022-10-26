@@ -6,36 +6,34 @@ Country: Poland
 
 from random import randint
 import time
-import logging
 
-logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG, datefmt='%d/%m/%Y %I:%M:%S %p')
-
-unsorted_lst = []
 random_len = randint(0, 100)
-for i in range(random_len):
-    unsorted_lst.append(randint(0, 1000))
+data = [randint(0, 1000) for _ in range(random_len)]
 
+def swap_data(data, i):
+    tmp_val = data[i + 1]
+    data[i + 1] = data[i]
+    data[i] = tmp_val
+    return data
 
-def bubble_sort(unsorted_lst):
-    logging.info(' --- STARTING THE BUBBLE SORT ALGORITHM ---')
-    logging.info(f' LOADED LIST: {unsorted_lst}')
+def bubble_sort(data):
+    start_time = time.time()
+    should_keep_sorting = True
 
-    sort_flag = 1
-    while sort_flag != 0:
-        sort_flag = 0
-        for i in range(len(unsorted_lst),1,-1):
-            if unsorted_lst[i - 1] < unsorted_lst[i - 2]:
-                logging.info(f' Found unsorted pair: {unsorted_lst[i-1], unsorted_lst[i-2]}')
-                logging.info(' --- SORTING ---')
-                tmp_val = unsorted_lst[i - 1]
-                unsorted_lst[i - 1] = unsorted_lst[i - 2]
-                unsorted_lst[i - 2] = tmp_val
-                logging.info(f' List after sorting: {unsorted_lst}')
-                sort_flag = 1
+    while should_keep_sorting:
         
-    sorted_lst = unsorted_lst
-    logging.info(f' --- SORTING COMPLETE ---\nSorted list: {sorted_lst}')
+        should_keep_sorting = False
+        
+        for i in range(len(data) - 1):
 
-start_time = time.time()
-bubble_sort(unsorted_lst)
-logging.info(f' --- Time of execution ---\n{time.time() - start_time} seconds')
+            if data[i] > data[i + 1]:
+                data = swap_data(data, i)
+                should_keep_sorting = True
+        
+    print(f' --- SORTING COMPLETE ---\nSorted data: {data}')
+    print(f' --- Time of execution ---\n{time.time() - start_time} seconds')
+    return data
+
+bubble_sort(data)
+
+
